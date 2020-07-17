@@ -1,4 +1,4 @@
-$(() => {
+$(function() {
 
     function taskHtml(task) {
             // The taskHtml method takes in a JavaScript representation
