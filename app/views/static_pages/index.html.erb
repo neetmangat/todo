@@ -2,7 +2,8 @@
     <header class="header">
         <h1>todos</h1>
         <form id="new-form">
-            <input type="text" class="new-todo" placeholder="testtext" />
+            <input type="text" class="new-todo" />
+            <input type="submit" class="submit-button" value="Add Task" />
         </form>
     </header>
 
@@ -18,8 +19,13 @@
     $(() => {
         $('#new-form').submit((event) => {
             event.preventDefault();
-            var textbox = $('.new-todo');
-            console.log("Task: ", textbox.val());
+            var newtask = $('.new-todo').val();
+            var addtask = newtask.charAt(0).toUpperCase() + newtask.slice(1)
+            var payload = {
+                task: {title: addtask, done: false}
+            };      
+
+            $.post("/tasks", payload);
         });
 
         function taskHtml(task) {
