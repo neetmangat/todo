@@ -29,7 +29,7 @@ $(function() {
             task: {
                 done: doneValue
             }
-        }).success((data) => {
+        }).success(function( data ) {
             var liHtml = taskHtml(data);
             var $li = $("#listItem-" + data.id);
             $li.replaceWith(liHtml);
@@ -37,21 +37,21 @@ $(function() {
         });
     };
 
-    $.get("/tasks").success(( data ) => {
+    $.get("/tasks").success(function( data ) {
         var htmlString = "";
-        $.each(data, (index, task) => {
+        $.each(data, function(index, task) {
             htmlString += taskHtml(task);
         });
         $('.todo-list').html(htmlString);
         $('.toggle').change(toggleTask);
     });
 
-    $('#new-form').submit((event) => {
+    $('#new-form').submit(function( event ) {
         event.preventDefault();
         var newtask = $('.new-todo').val();
         var addtask = newtask.charAt(0).toUpperCase() + newtask.slice(1)
         var payload = {task: {title: addtask, done: false}};      
-        $.post("/tasks", payload).success((data) => {
+        $.post("/tasks", payload).success(function(data) {
             var htmlString = taskHtml(data);
             $('.todo-list').append(htmlString);
             $('.toggle').change(toggleTask);
