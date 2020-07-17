@@ -43,14 +43,12 @@ $(() => {
         event.preventDefault();
         var newtask = $('.new-todo').val();
         var addtask = newtask.charAt(0).toUpperCase() + newtask.slice(1)
-        var payload = {
-            task: {title: addtask, done: false}
-        };      
-
+        var payload = {task: {title: addtask, done: false}};      
         $.post("/tasks", payload).success((data) => {
             var htmlString = taskHtml(data);
             $('.todo-list').append(htmlString);
             $('.toggle').change(toggleTask);
         });
+        $('.new-todo').val('')
     });
 });
