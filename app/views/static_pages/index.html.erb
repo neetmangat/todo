@@ -3,7 +3,7 @@
         <h1>todos</h1>
         <form id="new-form">
             <input type="text" class="new-todo" />
-            <input type="submit" class="submit-button" value="Add Task" />
+            <!--input type="submit" class="submit-button" value="Add Task" /-->
         </form>
     </header>
 
@@ -17,16 +17,6 @@
 
 <script>
     $(() => {
-        $('#new-form').submit((event) => {
-            event.preventDefault();
-            var newtask = $('.new-todo').val();
-            var addtask = newtask.charAt(0).toUpperCase() + newtask.slice(1)
-            var payload = {
-                task: {title: addtask, done: false}
-            };      
-
-            $.post("/tasks", payload);
-        });
 
         function taskHtml(task) {
                 // The taskHtml method takes in a JavaScript representation
@@ -65,8 +55,21 @@
             });
             $('.todo-list').html(htmlString);
             $('.toggle').change(toggleTask);
-            
         });
 
+        $('#new-form').submit((event) => {
+            event.preventDefault();
+            var newtask = $('.new-todo').val();
+            var addtask = newtask.charAt(0).toUpperCase() + newtask.slice(1)
+            var payload = {
+                task: {title: addtask, done: false}
+            };      
+
+            $.post("/tasks", payload).success((data) => {
+                var htmlString = taskHtml(data);
+                $('.todo-list').append(htmlString);
+                $('.toggle').click(toggleTask);
+            });
+        });
     });
 </script>
