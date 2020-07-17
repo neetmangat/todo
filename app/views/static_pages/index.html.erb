@@ -1,6 +1,9 @@
 <section class="todoapp">
     <header class="header">
         <h1>todos</h1>
+        <form id="new-form">
+            <input type="text" class="new-todo" placeholder="testtext" />
+        </form>
     </header>
 
     <section class="main">
@@ -13,6 +16,11 @@
 
 <script>
     $(() => {
+        $('#new-form').submit((event) => {
+            event.preventDefault();
+            var textbox = $('.new-todo');
+            console.log("Task: ", textbox.val());
+        });
 
         function taskHtml(task) {
                 // The taskHtml method takes in a JavaScript representation
@@ -27,7 +35,7 @@
                 '</label></div></li>';
 
             return liElement;
-        }
+        };
 
         function toggleTask(e) {
                 // toggleTask takes in an HTML representation of
@@ -42,7 +50,7 @@
                     done: doneValue
                 }
             });
-        }
+        };
 
         $.get("/tasks").success(( data ) => {
             var htmlString = "";
@@ -53,5 +61,6 @@
             $('.toggle').change(toggleTask);
             
         });
+
     });
 </script>
